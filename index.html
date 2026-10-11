@@ -26,8 +26,7 @@
     button { font: inherit; }
     a:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-offset: 5px; }
     .page { max-width: 1000px; margin: auto; padding: 48px 36px 32px; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .wordmark { color: var(--muted); font-size: 13px; letter-spacing: .14em; }
+    .topbar { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
     .controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .theme-toggle { border: 0; background: transparent; color: var(--teal); font-size: 23px; line-height: 1; padding: 6px; min-width: 36px; min-height: 36px; cursor: pointer; }
     .theme-toggle:hover { background: var(--hover); }
@@ -76,8 +75,7 @@
     }
     @media (max-width: 380px) {
       .page { padding-inline: 18px; }
-      .wordmark { font-size: 10px; letter-spacing: .04em; }
-      .topbar { gap: 8px; }
+        .topbar { gap: 8px; }
       .controls { gap: 4px; }
       .language button { padding-inline: 7px; }
       .socials { grid-template-columns: 1fr; }
@@ -88,7 +86,6 @@
 <body>
   <div class="page">
     <header class="topbar">
-      <span class="wordmark">CMD / PERSONAL PORTAL</span>
       <div class="controls">
       <div class="language" role="group" aria-label="语言 / Language">
         <button type="button" data-lang="zh" aria-pressed="true" lang="zh-CN">中文</button>
