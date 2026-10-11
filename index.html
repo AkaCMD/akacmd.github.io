@@ -37,14 +37,21 @@
     main { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; padding-top: 58px; }
     .profile { text-align: left; }
     .avatar { display: grid; justify-content: start; margin-bottom: 24px; }
-    .avatar img { width: 56px; height: 56px; }
+    .avatar-button { display: grid; place-items: center; border: 0; padding: 8px; margin: -8px; background: transparent; cursor: pointer; transition: transform .45s cubic-bezier(.34, 1.56, .64, 1); }
+    .avatar-button:hover { transform: scale(1.12) rotate(-4deg); }
+    .avatar-button:active { transform: scale(.94); }
+    .avatar img { width: 56px; height: 56px; animation: blobcat-float 4s ease-in-out infinite; filter: drop-shadow(0 8px 5px rgb(0 0 0 / .16)); }
+    :root[data-theme="dark"] .avatar img { filter: drop-shadow(0 8px 6px rgb(0 0 0 / .35)); }
+    @keyframes blobcat-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
     h1 { margin: 0; color: var(--red); font-size: 28px; line-height: 1.2; letter-spacing: -.04em; font-weight: 700; }
     .bio { margin: 20px 0 0; color: var(--muted); font-size: 16px; line-height: 1.9; text-wrap: pretty; }
     .section-label { margin: 0 0 14px; color: var(--muted); font-size: 12px; letter-spacing: .06em; }
     .section-label:not(:first-child) { margin-top: 30px; }
     .links { display: grid; gap: 6px; }
-    .link { display: flex; align-items: center; gap: 15px; padding: 14px 12px; transition: background .18s ease; }
-    .link:hover { background: var(--hover); }
+    .link { display: flex; align-items: center; gap: 15px; padding: 14px 12px; transition: background .2s ease, transform .45s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease; }
+    .link:hover { background: var(--hover); transform: translateY(-3px); box-shadow: 0 5px 12px rgb(0 0 0 / .06); }
+    :root[data-theme="dark"] .link:hover { box-shadow: 0 5px 14px rgb(0 0 0 / .18); }
+    .link:active { transform: translateY(0) scale(.99); }
     .icon { width: 28px; height: 28px; display: grid; place-items: center; color: var(--teal); flex-shrink: 0; }
     .svg-icon { display: block; width: 21px; height: 21px; background: currentColor; -webkit-mask: var(--icon-url) center / contain no-repeat; mask: var(--icon-url) center / contain no-repeat; }
     .link-copy { flex: 1; min-width: 0; }
@@ -75,7 +82,7 @@
       .language button { padding-inline: 7px; }
       .socials { grid-template-columns: 1fr; }
     }
-    @media (prefers-reduced-motion: reduce) { .link { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .link, .avatar-button { transition: none; } .avatar img { animation: none; } .link:hover, .link:active, .avatar-button:hover, .avatar-button:active { transform: none; } }
   </style>
 </head>
 <body>
@@ -92,8 +99,10 @@
     </header>
     <main>
       <section class="profile" aria-labelledby="name">
-        <div class="avatar" aria-hidden="true">
-          <img src="assets/icons/blobcatcoffee.png" width="56" height="56" alt="">
+        <div class="avatar">
+          <button class="avatar-button" type="button" aria-label="让咖啡猫跳一下" title="让咖啡猫跳一下">
+            <img src="assets/icons/blobcatcoffee.png" width="56" height="56" alt="">
+          </button>
         </div>
         <h1 id="name"><span data-i18n="name">三重鸭</span> <span class="alias">/ cmd</span></h1>
         <p class="bio" data-i18n="bio">你好，朋友们常叫我 cmd。上班之余做独立游戏、散步，也在寻找新的爱好。欢迎和我聊小众游戏，以及其他乱七八糟的东西。</p>
@@ -154,8 +163,27 @@
       document.querySelectorAll('[data-i18n]').forEach(element => { element.textContent = copy[element.dataset.i18n]; });
       document.querySelectorAll('[data-lang]').forEach(button => { button.setAttribute('aria-pressed', String(button.dataset.lang === lang)); });
       updateThemeButton();
+      const catLabel = lang === 'zh' ? '让咖啡猫跳一下' : 'Make the coffee cat bounce';
+      catButton.setAttribute('aria-label', catLabel);
+      catButton.title = catLabel;
       try { localStorage.setItem('cmd-language', lang); } catch { /* Language switching still works when storage is unavailable. */ }
     }
+    const catButton = document.querySelector('.avatar-button');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let catBounce;
+    catButton.addEventListener('click', () => {
+      if (reducedMotion.matches) return;
+      catBounce?.cancel();
+      catBounce = catButton.animate([
+        { transform: 'translateY(0) scale(1)', offset: 0 },
+        { transform: 'translateY(3px) scale(1.12, .85)', offset: .12 },
+        { transform: 'translateY(-24px) scale(.92, 1.12) rotate(-8deg)', offset: .38 },
+        { transform: 'translateY(0) scale(1.08, .92) rotate(4deg)', offset: .65 },
+        { transform: 'translateY(-6px) scale(.98, 1.03)', offset: .82 },
+        { transform: 'translateY(0) scale(1)', offset: 1 }
+      ], { duration: 720, easing: 'ease-in-out' });
+    });
+    reducedMotion.addEventListener('change', event => { if (event.matches) catBounce?.cancel(); });
     const themeButton = document.querySelector('.theme-toggle');
     function updateThemeButton() {
       const dark = document.documentElement.dataset.theme === 'dark';
