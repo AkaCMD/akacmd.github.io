@@ -47,9 +47,8 @@
     .section-label { margin: 0 0 14px; color: var(--muted); font-size: 12px; letter-spacing: .06em; }
     .section-label:not(:first-child) { margin-top: 30px; }
     .links { display: grid; gap: 6px; }
-    .link { display: flex; align-items: center; gap: 15px; padding: 14px 12px; transition: background .2s ease, transform .45s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease; }
-    .link:hover { background: var(--hover); transform: translateY(-3px); box-shadow: 0 5px 12px rgb(0 0 0 / .06); }
-    :root[data-theme="dark"] .link:hover { box-shadow: 0 5px 14px rgb(0 0 0 / .18); }
+    .link { display: flex; align-items: center; gap: 15px; padding: 14px 12px; transition: background .2s ease, transform .45s cubic-bezier(.34, 1.56, .64, 1); }
+    .link:hover { background: var(--hover); transform: translateY(-3px); }
     .link:active { transform: translateY(0) scale(.99); }
     .icon { width: 28px; height: 28px; display: grid; place-items: center; color: var(--teal); flex-shrink: 0; }
     .svg-icon { display: block; width: 21px; height: 21px; background: currentColor; -webkit-mask: var(--icon-url) center / contain no-repeat; mask: var(--icon-url) center / contain no-repeat; }
