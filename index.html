@@ -7,66 +7,67 @@
   <meta name="theme-color" content="#FFFFFF">
   <title>三重鸭 / cmd — 个人传送门</title>
   <link rel="icon" href="assets/favicon.ico">
-  <link rel="preload" href="assets/AtkinsonHyperlegibleNext-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Libron-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
   <script>
     // Share the blog's preference and apply it before the first paint.
-    const themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
     let savedTheme = null;
-    try { savedTheme = localStorage.getItem('picoPreferredColorScheme'); } catch { /* Fall back to the system preference. */ }
-    document.documentElement.dataset.theme = ['light', 'dark'].includes(savedTheme) ? savedTheme : (themeMedia.matches ? 'dark' : 'light');
+    try { savedTheme = localStorage.getItem('picoPreferredColorScheme'); } catch { /* Use the same light default as the blog. */ }
+    document.documentElement.dataset.theme = ['light', 'dark'].includes(savedTheme) ? savedTheme : 'light';
   </script>
   <style>
-    @font-face { font-family: "Atkinson Hyperlegible Next"; src: url("assets/AtkinsonHyperlegibleNext-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-    :root { color-scheme: light; --paper: #FFFFFF; --ink: #292929; --muted: #656565; --red: #DB3A34; --teal: #40A09A; --line: #e5e5e5; --hover: #F2F2F2; }
-    :root[data-theme="dark"] { color-scheme: dark; --paper: #252525; --ink: #E3DED8; --muted: #B8B0A8; --red: #E05750; --teal: #9FD3CF; --line: #3A3A3A; --hover: #303030; }
+    /* Palette and typography follow the Memex blog's custom.css. */
+    :root { color-scheme: light; --paper: #FFFFFF; --ink: #292929; --muted: #666E70; --red: #DB3A34; --teal: #24756F; --link-hover: #195B56; --line: #DEDEDE; --hover: #F2F2F2; }
+    :root[data-theme="dark"] { color-scheme: dark; --paper: #252525; --ink: #E3DED8; --muted: #B8B0A8; --red: #F07870; --teal: #9FD3CF; --link-hover: #B9E1DE; --line: #484848; --hover: #303030; }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Atkinson Hyperlegible Next", sans-serif; font-size: 16px; line-height: 1.6; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Libron", "Memex Han Serif", "Noto Serif CJK SC", "Songti SC", "SimSun", serif; font-synthesis: none; font-size: 16px; line-height: 1.7; }
     button, a { -webkit-tap-highlight-color: transparent; }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; }
-    a:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-offset: 5px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
     .page { max-width: 1000px; margin: auto; padding: 48px 36px 32px; }
     .topbar { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
     .controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .theme-toggle { border: 0; background: transparent; color: var(--teal); font-size: 23px; line-height: 1; padding: 6px; min-width: 36px; min-height: 36px; cursor: pointer; }
+    .theme-toggle { display: grid; place-items: center; border: 0; background: transparent; color: var(--teal); line-height: 1; padding: 0; width: 44px; height: 44px; cursor: pointer; }
+    .theme-toggle svg { display: block; width: 20px; height: 20px; }
     .theme-toggle:hover { background: var(--hover); }
     .language { display: flex; gap: 4px; }
-    .language button { border: 0; background: transparent; color: var(--muted); padding: 4px 12px; font-size: 13px; cursor: pointer; }
+    .language button { border: 0; background: transparent; color: var(--teal); padding: 8px 12px; min-height: 44px; font-size: 14px; cursor: pointer; }
+    .language button:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 5px; }
     .language button[aria-pressed="true"] { color: var(--teal); text-decoration: underline; text-underline-offset: 5px; }
     main { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; padding-top: 58px; }
     .profile { text-align: left; }
-    .avatar { display: grid; justify-content: start; margin-bottom: 24px; }
-    .avatar-button { display: grid; place-items: center; border: 0; padding: 8px; margin: -8px; background: transparent; cursor: pointer; transition: transform .45s cubic-bezier(.34, 1.56, .64, 1); }
-    .avatar-button:hover { transform: scale(1.12) rotate(-4deg); }
+    .avatar { display: grid; justify-content: start; margin-bottom: 28px; }
+    .avatar-button { display: grid; place-items: center; border: 0; padding: 8px; margin: -8px; background: transparent; cursor: pointer; transition: transform .15s ease; }
+    .avatar-button:hover { transform: rotate(-4deg); }
     .avatar-button:active { transform: scale(.94); }
-    .avatar img { width: 56px; height: 56px; animation: blobcat-float 4s ease-in-out infinite; filter: drop-shadow(0 8px 5px rgb(0 0 0 / .16)); }
-    :root[data-theme="dark"] .avatar img { filter: drop-shadow(0 8px 6px rgb(0 0 0 / .35)); }
-    @keyframes blobcat-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
-    h1 { margin: 0; color: var(--red); font-size: 28px; line-height: 1.2; letter-spacing: -.04em; font-weight: 700; }
-    .bio { margin: 20px 0 0; color: var(--muted); font-size: 16px; line-height: 1.9; text-wrap: pretty; }
-    .section-label { margin: 0 0 14px; color: var(--muted); font-size: 12px; letter-spacing: .06em; }
+    .avatar img { width: 56px; height: 56px; }
+    h1 { margin: 0; color: var(--red); font-size: 28px; line-height: 1.2; letter-spacing: normal; font-weight: 700; }
+    .bio { margin: 20px 0 0; color: var(--ink); font-size: 18px; line-height: 1.9; text-wrap: pretty; }
+    .section-label { margin: 0 0 14px; color: var(--muted); font-size: 16px; font-weight: 400; line-height: 1.5; }
     .section-label:not(:first-child) { margin-top: 30px; }
-    .links { display: grid; gap: 6px; }
-    .link { display: flex; align-items: center; gap: 15px; padding: 14px 12px; transition: background .2s ease, transform .45s cubic-bezier(.34, 1.56, .64, 1); }
-    .link:hover { background: var(--hover); transform: translateY(-3px); }
-    .link:active { transform: translateY(0) scale(.99); }
+    .links { display: grid; gap: 10px; }
+    .link { display: flex; align-items: center; gap: 15px; padding: 14px 12px; }
+    .link:hover { background: var(--hover); }
     .icon { width: 28px; height: 28px; display: grid; place-items: center; color: var(--teal); flex-shrink: 0; }
     .svg-icon { display: block; width: 21px; height: 21px; background: currentColor; -webkit-mask: var(--icon-url) center / contain no-repeat; mask: var(--icon-url) center / contain no-repeat; }
     .link-copy { flex: 1; min-width: 0; }
-    .link-title { display: block; color: var(--teal); font-size: 17px; font-weight: 700; line-height: 1.4; }
-    .link-description { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
-    .arrow { margin-left: auto; color: var(--muted); opacity: .65; }
+    .link-title { display: block; color: var(--ink); font-size: 22px; font-weight: 700; line-height: 1.4; }
+    .link-description { display: block; color: var(--muted); font-size: 16px; line-height: 1.7; margin-top: 6px; }
+    .arrow { margin-left: auto; color: var(--muted); }
     .arrow .svg-icon { width: 18px; height: 18px; }
-    .featured { background: var(--hover); }
-    .socials { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
-    .socials .link { gap: 10px; padding: 12px; }
-    .socials .link-title { font-size: 15px; }
+    .link:hover .link-title { color: var(--link-hover); }
+    .link:hover .arrow { color: var(--teal); }
+    .socials { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+    .socials .link { gap: 8px; padding: 12px 8px; }
+    .socials .icon { width: 24px; }
+    .socials .link-title { color: var(--teal); font-size: 17px; font-weight: 400; }
     .email { margin-top: 10px; }
-    .email .link-title { font-size: 15px; overflow-wrap: anywhere; }
+    .email .link-title { color: var(--teal); font-size: 17px; font-weight: 400; overflow-wrap: anywhere; }
     footer { text-align: left; margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); }
-    .motto { margin: 0; color: var(--red); font-size: 14px; }
-    .footer-note { color: var(--muted); font-size: 11px; margin: 8px 0 0; letter-spacing: .06em; }
-    .icon-credit { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
+    .motto { margin: 0; color: var(--muted); font-size: 16px; }
+    .footer-note { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+    .icon-credit { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
     .icon-credit a:hover { color: var(--teal); text-decoration: underline; }
     @media (max-width: 700px) {
       .page { max-width: 560px; padding: 26px 24px; }
@@ -74,12 +75,12 @@
     }
     @media (max-width: 380px) {
       .page { padding-inline: 18px; }
-        .topbar { gap: 8px; }
+      .topbar { gap: 8px; }
       .controls { gap: 4px; }
       .language button { padding-inline: 7px; }
       .socials { grid-template-columns: 1fr; }
     }
-    @media (prefers-reduced-motion: reduce) { .link, .avatar-button { transition: none; } .avatar img { animation: none; } .link:hover, .link:active, .avatar-button:hover, .avatar-button:active { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .avatar-button { transition: none; } .avatar-button:hover, .avatar-button:active { transform: none; } }
   </style>
 </head>
 <body>
@@ -90,7 +91,7 @@
         <button type="button" data-lang="zh" aria-pressed="true" lang="zh-CN">中文</button>
         <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
       </div>
-      <button class="theme-toggle" type="button" aria-label="切换到黑暗模式" title="切换到黑暗模式"><span aria-hidden="true">☽</span></button>
+      <button class="theme-toggle" type="button" aria-label="切换到黑暗模式" title="切换到黑暗模式"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path></svg></span></button>
       </div>
     </header>
     <main>
@@ -104,9 +105,9 @@
         <p class="bio" data-i18n="bio">你好，朋友们常叫我 cmd。上班之余做独立游戏、散步，也在寻找新的爱好。欢迎和我聊小众游戏，以及其他乱七八糟的东西。</p>
       </section>
       <nav aria-label="个人链接 / Personal links">
-        <div class="section-label" data-i18n="explore">文字与游戏 / EXPLORE</div>
+        <h2 class="section-label" data-i18n="explore">文字与游戏</h2>
         <div class="links">
-          <a class="link featured" href="/blog/">
+          <a class="link" href="/blog/">
             <span class="icon" aria-hidden="true"><span class="svg-icon" style="--icon-url: url('assets/icons/book-open.svg')"></span></span>
             <span class="link-copy"><span class="link-title" data-i18n="blog">Memex · 博客</span><span class="link-description" data-i18n="blogDesc">游戏设计、开发日志与生活碎片</span></span><span class="arrow" aria-hidden="true"><span class="svg-icon" style="--icon-url: url('assets/icons/arrow-right.svg')"></span></span>
           </a>
@@ -119,7 +120,7 @@
             <span class="link-copy"><span class="link-title">itch.io</span><span class="link-description" data-i18n="itchDesc">更多独立作品、实验与可玩原型</span></span><span class="arrow" aria-hidden="true"><span class="svg-icon" style="--icon-url: url('assets/icons/arrow-up-right.svg')"></span></span>
           </a>
         </div>
-        <div class="section-label" data-i18n="connect">其他出没地点 / CONNECT</div>
+        <h2 class="section-label" data-i18n="connect">其他出没地点</h2>
         <div class="socials">
           <a class="link" href="https://github.com/AkaCMD"><span class="icon" aria-hidden="true"><span class="svg-icon" style="--icon-url: url('assets/icons/github.svg')"></span></span><span class="link-title">GitHub</span><span class="arrow" aria-hidden="true"><span class="svg-icon" style="--icon-url: url('assets/icons/arrow-up-right.svg')"></span></span></a>
           <a class="link" href="https://space.bilibili.com/13179674"><span class="icon" aria-hidden="true"><span class="svg-icon" style="--icon-url: url('assets/icons/bilibili.svg')"></span></span><span class="link-title" data-i18n="bilibili">哔哩哔哩</span><span class="arrow" aria-hidden="true"><span class="svg-icon" style="--icon-url: url('assets/icons/arrow-up-right.svg')"></span></span></a>
@@ -137,17 +138,17 @@
         title: '三重鸭 / cmd — 个人传送门', description: '我是三重鸭 / cmd，做游戏设计与开发。这里是我的博客、独立游戏作品与社交链接。',
         name: '三重鸭', role: '游戏设计与开发 · 独立游戏创作者',
         bio: '你好，朋友们常叫我 cmd。上班之余做独立游戏、散步，也在寻找新的爱好。欢迎和我聊小众游戏，以及其他乱七八糟的东西。',
-        tagGames: '做点游戏', tagWalks: '散散步', tagCurious: '寻找新爱好', explore: '文字与游戏 / EXPLORE',
+        tagGames: '做点游戏', tagWalks: '散散步', tagCurious: '寻找新爱好', explore: '文字与游戏',
         blog: 'Memex · 博客', blogDesc: '游戏设计、开发日志与生活碎片', steamDesc: '正式发布的游戏，在这里找到', itchDesc: '更多独立作品、实验与可玩原型',
-        connect: '其他出没地点 / CONNECT', bilibili: '哔哩哔哩', emailDesc: '有想聊的？给我写封邮件吧。', footer: '三重鸭的小小互联网入口'
+        connect: '其他出没地点', bilibili: '哔哩哔哩', emailDesc: '有想聊的？给我写封邮件吧。', footer: '三重鸭的小小互联网入口'
       },
       en: {
         title: 'TrioDuckk / cmd — Personal portal', description: 'Game design and development, indie games, and walks. Find my blog, games, and social links here.',
         name: 'TrioDuckk', role: 'Game designer & developer · Indie game maker',
         bio: 'Hi! My friends call me cmd. Outside my day job, I make indie games, go for walks, and look for new hobbies. Come chat about niche games and all sorts of other things.',
-        tagGames: 'Making games', tagWalks: 'Taking walks', tagCurious: 'Trying new hobbies', explore: 'WORDS & GAMES / EXPLORE',
+        tagGames: 'Making games', tagWalks: 'Taking walks', tagCurious: 'Trying new hobbies', explore: 'Words & games',
         blog: 'Memex · Blog', blogDesc: 'Game design, dev logs, and bits of everyday life', steamDesc: 'Find my released games here', itchDesc: 'More indie projects, experiments, and playable prototypes',
-        connect: 'ELSEWHERE / CONNECT', bilibili: 'Bilibili', emailDesc: 'Something on your mind? Write me an email.', footer: 'A little corner of the internet by cmd'
+        connect: 'Elsewhere', bilibili: 'Bilibili', emailDesc: 'Something on your mind? Write me an email.', footer: 'A little corner of the internet by cmd'
       }
     };
     function setLanguage(language) {
@@ -185,7 +186,9 @@
       const dark = document.documentElement.dataset.theme === 'dark';
       const chinese = document.documentElement.lang === 'zh-CN';
       const label = chinese ? (dark ? '切换到明亮模式' : '切换到黑暗模式') : (dark ? 'Switch to light mode' : 'Switch to dark mode');
-      themeButton.querySelector('span').textContent = dark ? '☼' : '☽';
+      themeButton.querySelector('span').innerHTML = dark
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"></path></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path></svg>';
       themeButton.setAttribute('aria-label', label);
       themeButton.title = label;
       document.querySelector('meta[name="theme-color"]').content = dark ? '#252525' : '#FFFFFF';
@@ -199,13 +202,10 @@
       applyTheme(savedTheme);
       try { localStorage.setItem('picoPreferredColorScheme', savedTheme); } catch { /* Switching works without storage. */ }
     });
-    themeMedia.addEventListener('change', event => {
-      if (!['light', 'dark'].includes(savedTheme)) applyTheme(event.matches ? 'dark' : 'light');
-    });
     window.addEventListener('storage', event => {
       if (event.key === 'picoPreferredColorScheme' || event.key === null) {
         savedTheme = event.newValue;
-        applyTheme(['light', 'dark'].includes(savedTheme) ? savedTheme : (themeMedia.matches ? 'dark' : 'light'));
+        applyTheme(['light', 'dark'].includes(savedTheme) ? savedTheme : 'light');
       }
     });
     let initialLanguage = navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en';
