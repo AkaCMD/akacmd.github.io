@@ -53,6 +53,7 @@
     .svg-icon { display: block; width: 21px; height: 21px; background: currentColor; -webkit-mask: var(--icon-url) center / contain no-repeat; mask: var(--icon-url) center / contain no-repeat; }
     .link-copy { flex: 1; min-width: 0; }
     .link-title { display: block; color: var(--ink); font-size: 22px; font-weight: 700; line-height: 1.4; }
+    .link-title, .icon-credit a { text-decoration: underline wavy; text-decoration-thickness: 1px; text-underline-offset: 0.1em; }
     .link-description { display: block; color: var(--muted); font-size: 16px; line-height: 1.7; margin-top: 6px; }
     .arrow { margin-left: auto; color: var(--muted); }
     .arrow .svg-icon { width: 18px; height: 18px; }
@@ -68,7 +69,7 @@
     .motto { margin: 0; color: var(--muted); font-size: 16px; }
     .footer-note { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
     .icon-credit { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
-    .icon-credit a:hover { color: var(--teal); text-decoration: underline; }
+    .icon-credit a:hover { color: var(--teal); }
     @media (max-width: 700px) {
       .page { max-width: 560px; padding: 26px 24px; }
       main { grid-template-columns: 1fr; gap: 38px; padding-top: 38px; }
