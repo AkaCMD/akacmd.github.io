@@ -19,6 +19,8 @@
     /* Palette and typography follow the Memex blog's custom.css. */
     :root { color-scheme: light; --paper: #FFFFFF; --ink: #292929; --muted: #666E70; --red: #DB3A34; --teal: #24756F; --link-hover: #195B56; --line: #DEDEDE; --hover: #F2F2F2; }
     :root[data-theme="dark"] { color-scheme: dark; --paper: #252525; --ink: #E3DED8; --muted: #B8B0A8; --red: #F07870; --teal: #9FD3CF; --link-hover: #B9E1DE; --line: #484848; --hover: #303030; }
+    :root { --wave-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='3' viewBox='0 0 10 3'%3E%3Cpath d='M0 1.5 Q2.5 -.5 5 1.5 T10 1.5' fill='none' stroke='%23292929' stroke-width='1'/%3E%3C/svg%3E"); --wave-teal: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='3' viewBox='0 0 10 3'%3E%3Cpath d='M0 1.5 Q2.5 -.5 5 1.5 T10 1.5' fill='none' stroke='%2324756F' stroke-width='1'/%3E%3C/svg%3E"); --wave-hover: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='3' viewBox='0 0 10 3'%3E%3Cpath d='M0 1.5 Q2.5 -.5 5 1.5 T10 1.5' fill='none' stroke='%23195B56' stroke-width='1'/%3E%3C/svg%3E"); --wave-muted: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='3' viewBox='0 0 10 3'%3E%3Cpath d='M0 1.5 Q2.5 -.5 5 1.5 T10 1.5' fill='none' stroke='%23666E70' stroke-width='1'/%3E%3C/svg%3E"); }
+    :root[data-theme="dark"] { --wave-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='3' viewBox='0 0 10 3'%3E%3Cpath d='M0 1.5 Q2.5 -.5 5 1.5 T10 1.5' fill='none' stroke='%23E3DED8' stroke-width='1'/%3E%3C/svg%3E"); --wave-teal: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='3' viewBox='0 0 10 3'%3E%3Cpath d='M0 1.5 Q2.5 -.5 5 1.5 T10 1.5' fill='none' stroke='%239FD3CF' stroke-width='1'/%3E%3C/svg%3E"); --wave-hover: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='3' viewBox='0 0 10 3'%3E%3Cpath d='M0 1.5 Q2.5 -.5 5 1.5 T10 1.5' fill='none' stroke='%23B9E1DE' stroke-width='1'/%3E%3C/svg%3E"); --wave-muted: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='3' viewBox='0 0 10 3'%3E%3Cpath d='M0 1.5 Q2.5 -.5 5 1.5 T10 1.5' fill='none' stroke='%23B8B0A8' stroke-width='1'/%3E%3C/svg%3E"); }
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Libron", "Memex Han Serif", "Noto Serif CJK SC", "Songti SC", "SimSun", serif; font-synthesis: none; font-size: 16px; line-height: 1.7; }
     button, a { -webkit-tap-highlight-color: transparent; }
@@ -52,8 +54,15 @@
     .icon { width: 28px; height: 28px; display: grid; place-items: center; color: var(--teal); flex-shrink: 0; }
     .svg-icon { display: block; width: 21px; height: 21px; background: currentColor; -webkit-mask: var(--icon-url) center / contain no-repeat; mask: var(--icon-url) center / contain no-repeat; }
     .link-copy { flex: 1; min-width: 0; }
-    .link-title { display: block; color: var(--ink); font-size: 22px; font-weight: 700; line-height: 1.4; }
-    .link-title, .icon-credit a { text-decoration: underline wavy; text-decoration-thickness: 1px; text-underline-offset: 0.1em; }
+    .link-title { display: inline; color: var(--ink); font-size: 22px; font-weight: 700; line-height: 1.4; }
+    /* Match the blog's 10px wavelength and 1px stroke, independently. */
+    .link-title, .icon-credit a { text-decoration: none; background-image: var(--wave-ink); background-size: 10px 3px; background-repeat: repeat-x; background-position: left bottom; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    .link-copy .link-title { padding-bottom: 0.1em; }
+    .socials .link-title, .email .link-title { background-image: var(--wave-teal); }
+    .link:hover .link-title, .link:focus-visible .link-title { background-image: var(--wave-hover); }
+    .icon-credit a { background-image: var(--wave-muted); }
+    .icon-credit a:hover { background-image: var(--wave-teal); }
+    @media (forced-colors: active) { .link-title, .icon-credit a { text-decoration: underline; } }
     .link-description { display: block; color: var(--muted); font-size: 16px; line-height: 1.7; margin-top: 6px; }
     .arrow { margin-left: auto; color: var(--muted); }
     .arrow .svg-icon { width: 18px; height: 18px; }
